@@ -1,0 +1,50 @@
+this site will be designed to allow for photographers to critique each other's work through a very simple "who wins"
+process, similar to hot or not:
+1) two images are shown, at random, side by side, from a given category.
+2) the viewer picks one of them for being "better" (better being subjective, of course)
+3) the site keeps track of the most winning and the most losing photos.
+Repeat forever.
+
+Components:
+
+A web front-end (resolution agnostic, responsive design, angular or similar, should be scalable to phones on up)
+    Main view, which shows two images side by side
+        Category name
+        No author information, date taken, or name of the photographer/photo (to prevent gaming/biases)
+        The images are clickable
+            Clicking either image causes:
+                A reload of the page with two new randomly selected images
+                A SQL table update to tally the win and loss
+        The category name is clickable / dropdown
+            Shows other categories available (landscape, portrait, street, etc)
+    Top score tables, sorted by winning percentage
+        One for each category
+        Images displayed in a column, can be clicked to expand
+            Includes photo name, artist
+    User management (use off the shelf django if possible)
+        Login
+            Real name, email address, link to portfolio
+        Signup
+        Admin-facing vetting process for portfolio (make sure they're a real photographer)
+        Admin tool for reviewing reported photos (illegal content, copyright violations)
+        Banning/removal of users
+    User image uploads
+        Simple gallery front-end displaying uploaded images in thumbnail format
+        Upload tool
+            Images limited to 2048 on the long side. Scaled dynamically in web viewer based on screen size
+    Email servicing (off the shelf if possible)
+        Signup
+        Forgot password
+        Admin mail (you've been banned, etc)
+    Post MVP: discussion forum (off the shelf or a simple home-grown one?)
+    Post MVP: Peanut Gallery, which allows the public to vote (separate tally)
+    Ad network to make some money
+        Ad-free version for nominal fee, plus other goodies (more images can be uploaded, forum perks, etc)
+
+A database-driven back-end
+    SQL of some sort with a few small tables:
+        Users (name, userID, email, portfolio, number of images uploaded)
+        Photos (photoID, filename/path, userID, wins, losses, category)
+        Categories (name, categoryID)
+
+Cleanup: Once a month, bottom percentage (10%?) deleted
